@@ -15,7 +15,7 @@ open scoped MkAppNMacro
 /-- Replace common unicode characters by their TeX representation. For instance
 `α` will be replaced by `\alpha`. -/
 partial def String.toLatex (s : String) : String :=
-  match (s.split ('_' == ·)).map (fun part => part.foldl (λ s' t => s' ++ t.toLatex) "") with
+  match (s.split ('_' == ·)).map (fun part => part.foldl (λ s' t => s' ++ t.toLatex) "") |>.toList with
   | x :: xs@(_ :: _) =>
     if x.isEmpty then
       "\\_" ++ ("_".intercalate xs).toLatex

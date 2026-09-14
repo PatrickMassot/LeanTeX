@@ -101,7 +101,7 @@ def processParamKinds (c? : Option (TSyntax ``paramKindsClause)) : CommandElabM 
     let body' ← liftMacroM <| Term.expandWhereDeclsOpt (mkOptionalNode whereClause?) body
     let ppAttr ← `(Lean.Parser.Term.attrInstance| $attrKind? latex_pp $kind)
     let attrs := attrs?.map (·.getElems) |>.getD #[] |>.push ppAttr
-    `(command| $[$doc?:docComment]? @[$attrs,*]
+    `(command| $[$doc?:docComment]? @[$attrs,*] public
                 aux_def latex_pp_rule : LatexPrinter := $(TSyntax.mk body'))
   | _ => Elab.throwUnsupportedSyntax
 where
@@ -122,7 +122,7 @@ where
     let ppAttr ← `(Lean.Parser.Term.attrInstance|$attrKind? latex_pp $kind)
     let attrs := attrs?.map (·.getElems) |>.getD #[] |>.push ppAttr
     let body' ← liftMacroM <| Term.expandWhereDeclsOpt (mkOptionalNode whereClause?) body
-    `(command| $[$doc?:docComment]? @[$attrs,*]
+    `(command| $[$doc?:docComment]? @[$attrs,*] public
                 aux_def latex_pp_rule : LatexPrinter := fun _ => $(TSyntax.mk body'))
   | _ => Elab.throwUnsupportedSyntax
 
@@ -139,7 +139,7 @@ where
     let ppAttr ← `(Lean.Parser.Term.attrInstance|$attrKind? latex_pp_app $kind)
     let attrs := attrs?.map (·.getElems) |>.getD #[] |>.push ppAttr
     `(command| $[$doc?:docComment]? @[$attrs,*]
-                aux_def latex_pp_rule : LatexAppPrinter := $body)
+                public aux_def latex_pp_rule : LatexAppPrinter := $body)
   | _ => Elab.throwUnsupportedSyntax
 where
   isCatchAllPatt (t : Term) : Bool :=

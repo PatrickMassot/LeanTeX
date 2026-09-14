@@ -1,7 +1,7 @@
 import Lake
 open Lake DSL
 
-require "leanprover-community" / "proofwidgets" @ git "v0.0.53"
+require "leanprover-community" / "proofwidgets4" @ git "v0.0.108"
 
 package LeanTeX { }
 
